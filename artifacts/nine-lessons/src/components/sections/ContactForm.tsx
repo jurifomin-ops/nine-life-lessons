@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { motion } from "framer-motion";
-import { useSubmitApplication } from "@workspace/api-client-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -24,7 +23,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, Mail } from "lucide-react";
+
+const ROLE_LABELS: Record<string, string> = {
+  expert: "Педагог-методист",
+  psychologist: "Подростковый психолог",
+  teacher: "Практикующий учитель",
+  school: "Директор школы",
+  center: "Образовательный центр",
+  parent: "Родитель",
+};
 
 const formSchema = z.object({
   role: z.enum(["expert", "school", "center", "parent", "teacher", "psychologist"], {
@@ -42,9 +50,31 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
+function buildMailto(data: FormValues): string {
+  const roleLabel = ROLE_LABELS[data.role] ?? data.role;
+  const subject = encodeURIComponent(
+    `Заявка на участие в проекте «Девять уроков» — ${roleLabel}`
+  );
+
+  const lines = [
+    `Роль: ${roleLabel}`,
+    `Имя: ${data.name}`,
+    data.organization ? `Организация: ${data.organization}` : null,
+    `Email: ${data.email}`,
+    data.phone ? `Телефон / мессенджер: ${data.phone}` : null,
+    data.message ? `\nКомментарий:\n${data.message}` : null,
+    `\n—\nЗаявка отправлена с сайта «Девять фундаментальных уроков жизни»`,
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  const body = encodeURIComponent(lines);
+  return `mailto:juri.fomin@gmail.com?subject=${subject}&body=${body}`;
+}
+
 export function ContactForm() {
   const [isSuccess, setIsSuccess] = useState(false);
-  const { mutate: submitApplication, isPending } = useSubmitApplication();
+  const [isSending, setIsSending] = useState(false);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -58,14 +88,13 @@ export function ContactForm() {
   });
 
   const onSubmit = (data: FormValues) => {
-    submitApplication(
-      { data },
-      {
-        onSuccess: () => {
-          setIsSuccess(true);
-        },
-      }
-    );
+    setIsSending(true);
+    const mailtoUrl = buildMailto(data);
+    window.location.href = mailtoUrl;
+    setTimeout(() => {
+      setIsSending(false);
+      setIsSuccess(true);
+    }, 800);
   };
 
   if (isSuccess) {
@@ -75,15 +104,28 @@ export function ContactForm() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
             className="max-w-2xl mx-auto bg-card border border-primary/30 p-12 text-center"
           >
             <CheckCircle2 className="w-16 h-16 text-primary mx-auto mb-6" />
             <h3 className="font-serif text-3xl font-bold text-foreground mb-4">
-              Спасибо за ваш интерес
+              Ваше письмо готово
             </h3>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              Мы получили вашу заявку. В ближайшее время мы свяжемся с вами по указанным контактам для обсуждения деталей сотрудничества.
+            <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+              Мы открыли почтовый клиент с заполненным письмом на адрес{" "}
+              <span className="text-primary">juri.fomin@gmail.com</span>. Если
+              окно не открылось — отправьте письмо вручную, мы ответим в
+              ближайшее время.
             </p>
+            <button
+              onClick={() => {
+                setIsSuccess(false);
+                form.reset();
+              }}
+              className="text-sm text-muted-foreground underline underline-offset-4 hover:text-foreground transition-colors"
+            >
+              Заполнить форму заново
+            </button>
           </motion.div>
         </div>
       </section>
@@ -105,7 +147,8 @@ export function ContactForm() {
               Связаться с нами
             </h2>
             <p className="text-lg text-muted-foreground">
-              Заполните форму, чтобы присоединиться к проекту в качестве эксперта, предложить пилотную площадку или получить доступ к материалам.
+              Заполните форму — мы откроем ваш почтовый клиент с готовым
+              письмом. Отправьте его одним кликом.
             </p>
           </motion.div>
 
@@ -152,7 +195,11 @@ export function ContactForm() {
                       <FormItem>
                         <FormLabel>Имя Фамилия *</FormLabel>
                         <FormControl>
-                          <Input placeholder="Иван Иванов" {...field} className="bg-background border-border/50 h-12 rounded-none" />
+                          <Input
+                            placeholder="Иван Иванов"
+                            {...field}
+                            className="bg-background border-border/50 h-12 rounded-none"
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -166,7 +213,12 @@ export function ContactForm() {
                       <FormItem>
                         <FormLabel>Организация (опционально)</FormLabel>
                         <FormControl>
-                          <Input placeholder="Школа №123 / Центр развития" {...field} value={field.value || ""} className="bg-background border-border/50 h-12 rounded-none" />
+                          <Input
+                            placeholder="Школа №123 / Центр развития"
+                            {...field}
+                            value={field.value || ""}
+                            className="bg-background border-border/50 h-12 rounded-none"
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -180,9 +232,14 @@ export function ContactForm() {
                     name="email"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Email *</FormLabel>
+                        <FormLabel>Ваш Email *</FormLabel>
                         <FormControl>
-                          <Input placeholder="ivan@example.com" type="email" {...field} className="bg-background border-border/50 h-12 rounded-none" />
+                          <Input
+                            placeholder="ivan@example.com"
+                            type="email"
+                            {...field}
+                            className="bg-background border-border/50 h-12 rounded-none"
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -196,7 +253,12 @@ export function ContactForm() {
                       <FormItem>
                         <FormLabel>Телефон / Мессенджер (опционально)</FormLabel>
                         <FormControl>
-                          <Input placeholder="+7 (999) 000-00-00" {...field} value={field.value || ""} className="bg-background border-border/50 h-12 rounded-none" />
+                          <Input
+                            placeholder="+7 (999) 000-00-00"
+                            {...field}
+                            value={field.value || ""}
+                            className="bg-background border-border/50 h-12 rounded-none"
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -211,11 +273,11 @@ export function ContactForm() {
                     <FormItem>
                       <FormLabel>Комментарий (опционально)</FormLabel>
                       <FormControl>
-                        <Textarea 
-                          placeholder="Ваши вопросы, предложения или ожидания от проекта" 
-                          className="bg-background border-border/50 min-h-[120px] rounded-none resize-none" 
-                          {...field} 
-                          value={field.value || ""} 
+                        <Textarea
+                          placeholder="Ваши вопросы, предложения или ожидания от проекта"
+                          className="bg-background border-border/50 min-h-[120px] rounded-none resize-none"
+                          {...field}
+                          value={field.value || ""}
                         />
                       </FormControl>
                       <FormMessage />
@@ -244,12 +306,13 @@ export function ContactForm() {
                   )}
                 />
 
-                <Button 
-                  type="submit" 
-                  disabled={isPending}
-                  className="w-full bg-primary text-primary-foreground hover:bg-primary/90 h-14 rounded-none text-base font-medium"
+                <Button
+                  type="submit"
+                  disabled={isSending}
+                  className="w-full bg-primary text-primary-foreground hover:bg-primary/90 h-14 rounded-none text-base font-medium gap-2"
                 >
-                  {isPending ? "Отправка..." : "Отправить заявку"}
+                  <Mail className="w-5 h-5" />
+                  {isSending ? "Открываем почтовый клиент..." : "Отправить заявку"}
                 </Button>
               </form>
             </Form>
