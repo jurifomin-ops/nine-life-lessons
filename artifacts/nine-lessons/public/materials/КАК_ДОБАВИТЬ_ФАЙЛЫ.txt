@@ -1,0 +1,12 @@
+Поместите файлы материалов в эту папку со следующими именами:
+
+  rabochaya_tetrad_modul_1_opyt_kak_istochnik_obucheniya.pdf
+  rabochaya_tetrad_modul_1_opyt_kak_istochnik_obucheniya.docx
+  prezentaciya_9_urokov_zhizni.pptx
+
+После добавления файлов отправьте изменения в GitHub:
+  git add .
+  git commit -m "Добавлены файлы материалов"
+  git push ...
+
+Кнопки скачивания на сайте заработают автоматически.
