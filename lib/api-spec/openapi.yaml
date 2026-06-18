@@ -3,13 +3,15 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: API specification for Nine Lessons educational project
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: applications
+    description: Application form submissions
 paths:
   /healthz:
     get:
@@ -24,6 +26,46 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /applications:
+    post:
+      operationId: submitApplication
+      tags: [applications]
+      summary: Submit an application
+      description: Submit a contact/application form from the site
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ApplicationInput"
+      responses:
+        "201":
+          description: Application submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Application"
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    get:
+      operationId: listApplications
+      tags: [applications]
+      summary: List all applications
+      description: Retrieve all submitted applications
+      responses:
+        "200":
+          description: List of applications
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Application"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +76,67 @@ components:
       required:
         - status
 
+    ApplicationInput:
+      type: object
+      required:
+        - role
+        - name
+        - email
+        - consent
+      properties:
+        role:
+          type: string
+          description: "Role of the applicant: expert, school, center, parent, teacher, psychologist"
+          enum: [expert, school, center, parent, teacher, psychologist]
+        name:
+          type: string
+          minLength: 2
+        organization:
+          type: ["string", "null"]
+        email:
+          type: string
+          format: email
+        phone:
+          type: ["string", "null"]
+        message:
+          type: ["string", "null"]
+        consent:
+          type: boolean
+
+    Application:
+      type: object
+      required:
+        - id
+        - role
+        - name
+        - email
+        - consent
+        - createdAt
+      properties:
+        id:
+          type: integer
+        role:
+          type: string
+        name:
+          type: string
+        organization:
+          type: ["string", "null"]
+        email:
+          type: string
+        phone:
+          type: ["string", "null"]
+        message:
+          type: ["string", "null"]
+        consent:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+
+    ErrorResponse:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: string
