@@ -46,7 +46,7 @@ jobs:
             ${{ runner.os }}-pnpm-
 
       - name: Установить зависимости
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --no-frozen-lockfile
 
       - name: Собрать сайт
         run: pnpm --filter @workspace/nine-lessons run build:github
