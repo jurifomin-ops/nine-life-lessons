@@ -12,13 +12,13 @@ export function Author() {
             transition={{ duration: 0.6 }}
             className="shrink-0 flex flex-col items-center gap-4"
           >
-            <div className="w-48 h-48 md:w-56 md:h-56 relative bg-card border border-border flex items-center justify-center overflow-hidden">
-              <div className="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary via-background to-background" />
-              <span className="font-serif text-6xl md:text-7xl font-bold text-primary/80">ЮФ</span>
+            <div className="w-48 h-48 md:w-56 md:h-56 relative bg-card border border-border overflow-hidden">
+              <img
+                src={`${import.meta.env.BASE_URL}author.png`}
+                alt="Юрий Фомин"
+                className="w-full h-full object-cover"
+              />
             </div>
-            <p className="text-xs text-muted-foreground/50 text-center max-w-[12rem]">
-              Фотография автора будет добавлена
-            </p>
           </motion.div>
 
           <motion.div
