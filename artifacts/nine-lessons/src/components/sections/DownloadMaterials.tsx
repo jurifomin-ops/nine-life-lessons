@@ -19,7 +19,7 @@ const materials: MaterialCard[] = [
     description: "Практические упражнения по теме «Опыт как источник обучения»",
     filename: "rabochaya_tetrad_modul_1_opyt_kak_istochnik_obucheniya.pdf",
     label: "Скачать PDF",
-    available: false,
+    available: true,
   },
   {
     icon: <FileType className="w-6 h-6" />,
@@ -27,7 +27,7 @@ const materials: MaterialCard[] = [
     description: "Версия в формате DOCX для адаптации и печати",
     filename: "rabochaya_tetrad_modul_1_opyt_kak_istochnik_obucheniya.docx",
     label: "Скачать DOCX",
-    available: false,
+    available: true,
   },
   {
     icon: <Presentation className="w-6 h-6" />,
@@ -35,7 +35,7 @@ const materials: MaterialCard[] = [
     description: "Обзор программы «Девять уроков жизни», 12 слайдов",
     filename: "prezentaciya_9_urokov_zhizni.pptx",
     label: "Скачать PPTX",
-    available: false,
+    available: true,
   },
 ];
 
