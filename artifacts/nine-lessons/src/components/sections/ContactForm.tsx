@@ -111,11 +111,23 @@ export function ContactForm() {
             <h3 className="font-serif text-3xl font-bold text-foreground mb-4">
               Ваше письмо готово
             </h3>
-            <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+            <p className="text-lg text-muted-foreground leading-relaxed mb-4">
               Мы открыли почтовый клиент с заполненным письмом на адрес{" "}
-              <span className="text-primary">juri.fomin@gmail.com</span>. Если
-              окно не открылось — отправьте письмо вручную, мы ответим в
-              ближайшее время.
+              <a
+                href="mailto:juri.fomin@gmail.com"
+                className="text-primary hover:underline"
+              >
+                juri.fomin@gmail.com
+              </a>.
+            </p>
+            <p className="text-sm text-muted-foreground/70 mb-8">
+              Если окно не открылось — напишите напрямую на{" "}
+              <a
+                href="mailto:juri.fomin@gmail.com"
+                className="text-primary hover:underline"
+              >
+                juri.fomin@gmail.com
+              </a>. Мы ответим в ближайшее время.
             </p>
             <button
               onClick={() => {
@@ -146,9 +158,17 @@ export function ContactForm() {
             <h2 className="font-serif text-3xl md:text-5xl font-bold text-foreground mb-4">
               Связаться с нами
             </h2>
-            <p className="text-lg text-muted-foreground">
-              Заполните форму — мы откроем ваш почтовый клиент с готовым
-              письмом. Отправьте его одним кликом.
+            <p className="text-lg text-muted-foreground mb-2">
+              Заполните форму — мы откроем ваш почтовый клиент с готовым письмом. Отправьте его одним кликом.
+            </p>
+            <p className="text-sm text-muted-foreground/60">
+              Если форма не открылась, напишите напрямую:{" "}
+              <a
+                href="mailto:juri.fomin@gmail.com"
+                className="text-primary hover:underline"
+              >
+                juri.fomin@gmail.com
+              </a>
             </p>
           </motion.div>
 

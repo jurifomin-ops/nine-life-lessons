@@ -39,9 +39,30 @@ function HomePage() {
         <FinalCTA />
         <ContactForm />
       </main>
-      <footer className="py-8 bg-card border-t border-border text-center text-muted-foreground text-sm">
-        <div className="container mx-auto px-4">
-          <p>© {new Date().getFullYear()} Девять фундаментальных уроков жизни. Образовательный проект Юрия Фомина.</p>
+      <footer className="py-12 bg-card border-t border-border">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="max-w-4xl mx-auto space-y-6">
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              «Девять фундаментальных уроков жизни» — авторская общественная образовательная инициатива.
+              Материалы находятся в стадии экспертной оценки и пилотирования.
+            </p>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-4 border-t border-border/40">
+              <p className="text-xs text-muted-foreground/60">
+                © {new Date().getFullYear()} Юрий Фомин. Все права защищены.
+              </p>
+              <div className="flex flex-wrap gap-x-6 gap-y-2 text-xs text-muted-foreground/60">
+                <a href="mailto:juri.fomin@gmail.com" className="hover:text-primary transition-colors">
+                  juri.fomin@gmail.com
+                </a>
+                <span title="Документ готовится" className="cursor-default opacity-50">
+                  Политика обработки персональных данных
+                </span>
+                <span title="Документ готовится" className="cursor-default opacity-50">
+                  Согласие на обработку данных
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </footer>
     </div>

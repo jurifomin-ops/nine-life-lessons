@@ -7,6 +7,7 @@ interface MaterialCard {
   description: string;
   filename: string;
   label: string;
+  meta: string;
   available: boolean;
 }
 
@@ -19,22 +20,25 @@ const materials: MaterialCard[] = [
     description: "Практические упражнения по теме «Опыт как источник обучения»",
     filename: "rabochaya_tetrad_modul_1_opyt_kak_istochnik_obucheniya.pdf",
     label: "Скачать PDF",
+    meta: "PDF · 23 страницы · версия 1.0 · июнь 2026",
     available: true,
   },
   {
     icon: <FileType className="w-6 h-6" />,
     title: "Рабочая тетрадь (редактируемая)",
-    description: "Версия в формате DOCX для адаптации и печати",
+    description: "Версия для адаптации под конкретную школу или класс",
     filename: "rabochaya_tetrad_modul_1_opyt_kak_istochnik_obucheniya.docx",
     label: "Скачать DOCX",
+    meta: "DOCX · редактируемая версия · версия 1.0 · июнь 2026",
     available: true,
   },
   {
     icon: <Presentation className="w-6 h-6" />,
     title: "Презентация проекта",
-    description: "Обзор программы «Девять уроков жизни», 12 слайдов",
+    description: "Обзор программы «Девять уроков жизни» для знакомства и обсуждения",
     filename: "prezentaciya_9_urokov_zhizni.pptx",
     label: "Скачать PPTX",
+    meta: "PPTX · 12 слайдов · версия 1.0 · июнь 2026",
     available: true,
   },
 ];
@@ -81,8 +85,11 @@ export function DownloadMaterials() {
               <h3 className="font-serif text-xl font-bold text-foreground mb-2">
                 {material.title}
               </h3>
-              <p className="text-muted-foreground text-sm mb-8 flex-1">
+              <p className="text-muted-foreground text-sm mb-3">
                 {material.description}
+              </p>
+              <p className="text-muted-foreground/50 text-xs mb-8">
+                {material.meta}
               </p>
 
               <div className="mt-auto">

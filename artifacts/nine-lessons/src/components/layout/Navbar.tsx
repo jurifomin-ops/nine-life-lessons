@@ -19,7 +19,7 @@ export function Navbar() {
     setMobileMenuOpen(false);
     const element = document.getElementById(id);
     if (element) {
-      const offset = 80; // Navbar height
+      const offset = 80;
       const bodyRect = document.body.getBoundingClientRect().top;
       const elementRect = element.getBoundingClientRect().top;
       const elementPosition = elementRect - bodyRect;
@@ -37,7 +37,7 @@ export function Navbar() {
     { name: "Уроки", href: "lessons" },
     { name: "Первый модуль", href: "module" },
     { name: "Дорожная карта", href: "roadmap" },
-    { name: "Об авторе", href: "author" },
+    { name: "Автор", href: "author" },
     { name: "Контакт", href: "contact" },
   ];
 
@@ -52,7 +52,6 @@ export function Navbar() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3 cursor-pointer" onClick={() => scrollToSection("hero")}>
-            {/* Logo Mark */}
             <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M16 2L30 16L16 30L2 16L16 2Z" stroke="hsl(var(--primary))" strokeWidth="2" fill="hsl(var(--card))"/>
               <path d="M16 8L24 16L16 24L8 16L16 8Z" fill="hsl(var(--accent))" opacity="0.8"/>
@@ -60,7 +59,6 @@ export function Navbar() {
             <span className="font-serif font-semibold text-lg tracking-wide hidden sm:block">Девять уроков</span>
           </div>
 
-          {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-8">
             <div className="flex items-center gap-6">
               {navLinks.map((link) => (
@@ -81,7 +79,6 @@ export function Navbar() {
             </Button>
           </div>
 
-          {/* Mobile Toggle */}
           <button
             className="md:hidden text-foreground p-2"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -91,7 +88,6 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Nav */}
       {mobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 right-0 bg-card border-b border-border shadow-lg py-4 px-4 flex flex-col gap-4">
           {navLinks.map((link) => (

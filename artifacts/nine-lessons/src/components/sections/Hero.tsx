@@ -25,27 +25,13 @@ export function Hero() {
       {/* Animated Background Elements */}
       <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
         <motion.div
-          animate={{
-            y: [0, -20, 0],
-            rotate: [0, 5, 0],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
+          animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
           className="absolute top-1/4 left-1/4 w-64 h-64 border border-primary/30 rounded-full"
         />
         <motion.div
-          animate={{
-            y: [0, 30, 0],
-            rotate: [0, -10, 0],
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
+          animate={{ y: [0, 30, 0], rotate: [0, -10, 0] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
           className="absolute top-1/3 right-1/4 w-96 h-96 border border-accent/20 rounded-full"
         />
       </div>
@@ -87,15 +73,32 @@ export function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-12 leading-relaxed"
+          className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-10 leading-relaxed"
         >
           Мы не можем прожить жизнь за ребёнка. Но можем научить его учиться у самой жизни.
         </motion.p>
 
+        {/* Status bar */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.75 }}
+          className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-10 text-xs text-muted-foreground/70 tracking-wide uppercase"
+        >
+          <span className="flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-primary inline-block" />
+            Рабочая версия 1.0
+          </span>
+          <span className="hidden sm:block text-border">|</span>
+          <span>Первый модуль разработан</span>
+          <span className="hidden sm:block text-border">|</span>
+          <span>Открыт набор экспертов и пилотных площадок</span>
+        </motion.div>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
+          transition={{ duration: 0.8, delay: 0.9 }}
           className="flex flex-col sm:flex-row gap-4"
         >
           <Button
@@ -110,7 +113,14 @@ export function Hero() {
             onClick={() => scrollToSection("contact")}
             className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-none h-14 px-8 text-base transition-all"
           >
-            Стать участником пилота
+            Предложить площадку для пилота
+          </Button>
+          <Button
+            size="lg"
+            onClick={() => scrollToSection("contact")}
+            className="bg-card border border-accent/40 text-accent hover:bg-card/80 hover:border-accent rounded-none h-14 px-8 text-base transition-all"
+          >
+            Стать экспертом проекта
           </Button>
         </motion.div>
       </div>
@@ -118,7 +128,7 @@ export function Hero() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.2 }}
+        transition={{ duration: 1, delay: 1.3 }}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer text-muted-foreground hover:text-primary transition-colors"
         onClick={() => scrollToSection("why")}
       >
