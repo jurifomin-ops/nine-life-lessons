@@ -63,6 +63,16 @@ export function FirstModule() {
               size="lg"
               variant="outline"
               className="bg-transparent border-primary/50 text-foreground hover:bg-primary/10 rounded-none w-full sm:w-auto"
+              onClick={() => {
+                const el = document.getElementById("materials");
+                if (el) {
+                  const offset = 80;
+                  window.scrollTo({
+                    top: el.getBoundingClientRect().top + window.scrollY - offset,
+                    behavior: "smooth",
+                  });
+                }
+              }}
             >
               Посмотреть состав модуля
             </Button>
