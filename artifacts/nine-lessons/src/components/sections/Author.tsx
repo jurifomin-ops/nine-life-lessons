@@ -19,6 +19,9 @@ export function Author() {
                 className="w-full h-full object-cover"
               />
             </div>
+            <p className="text-xs text-muted-foreground/70 text-center max-w-[13rem] leading-relaxed">
+              Советник президента МАП по стратегическому развитию и общественным инициативам
+            </p>
           </motion.div>
 
           <motion.div
